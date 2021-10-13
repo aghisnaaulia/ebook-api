@@ -15,18 +15,15 @@ class BookController extends Controller
     public function index()
     {
         return response()->json([
-            'title' => 'Tugas KK4-B',
-            'description' => 'Gapapa Banyak Tugas Pak, Asalkan Bertahap, karena Otak Saya Perlu Loading Pak',
-            'author' => 'Aghisna Aulia Rahma',
-            'publisher' => 'Loveablee',
-            'date_of_issue' => '2021-09-04'
+            "message" => "Daftar Buku",
+            "data" => Book::all()
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,7 +36,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_of_issue = $request->date_of_issue;
         $book->save();
-        return response()->json($book); 
+        return response()->json($book, 420); 
     }
 
     /**
@@ -71,7 +68,7 @@ class BookController extends Controller
         $book->author = $request->author;
         $book->date_of_issue = $request->date_of_issue;
         $book->save();
-        return response()->json($book); 
+        return response()->json($book, 420); 
     }
 
     /**
@@ -88,5 +85,8 @@ class BookController extends Controller
             "message" => "Data Buku Telah dihapus",
             "data" => $book
         ]);
+    }
+    public function search($title){
+        return Book::where('title', 'like', '%'.$title.'%')->get();
     }
 }
